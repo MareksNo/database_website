@@ -1,7 +1,15 @@
 from config import app
 import config
 
-from routes import HomePageView, RegistrationView, LoginView, AddProductView, LogoutView
+from routes import (
+    HomePageView,
+    RegistrationView,
+    LoginView,
+    AddProductView,
+    LogoutView,
+    DisplayProductView,
+    SearchProductView,
+)
 
 app.add_url_rule(
     rule='//',
@@ -26,6 +34,16 @@ app.add_url_rule(
 app.add_url_rule(
     rule='/logout/',
     view_func=LogoutView.as_view('logout'),
+)
+
+app.add_url_rule(
+    rule='/product/<int:product_id>',
+    view_func=DisplayProductView.as_view('display_product'),
+)
+
+app.add_url_rule(
+    rule='/product/<search_name>',
+    view_func=SearchProductView.as_view('search_product'),
 )
 
 if __name__ == '__main__':

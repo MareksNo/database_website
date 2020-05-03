@@ -106,13 +106,14 @@ class LogoutView(MethodView):
         return redirect(url_for('login'))
 
 
-@app.route("/product/<int:product_id>")
-def display_product(product_id):
-    product = Product.query.get_or_404(product_id)
-    return render_template('display_product.html', title=product.product_name, product=product)
+class DisplayProductView(MethodView):
+    def get(self, product_id):
+        product = Product.query.get_or_404(product_id)
+        return render_template('display_product.html', title=product.product_name, product=product)
 
 
-@app.route('/product/search/<string:search_name>')
-def search_product(search_name):
-    products = Product.query.filter(Product.product_name.contains(search_name))
-    return render_template('search_product.html', title=search_name, products=products)
+class SearchProductView(MethodView):
+    def get(self, search_name):
+        products = Product.query.filter(Product.product_name.contains(search_name))
+        return render_template('search_product.html', title=search_name, products=products)
+
