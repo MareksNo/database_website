@@ -1,3 +1,5 @@
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from flask_login import UserMixin
 
 from flask_script import Manager
@@ -28,6 +30,21 @@ class User(db.Model, UserMixin):
 
     __table_args__ = {'extend_existing': True}
 
+    def create_password(self, password):
+        self.password = generate_password_hash(password=password)
+
+    @classmethod
+    def create(cls, email, password, username):
+
+        instance = cls(
+            username=username,
+            email=email,
+        )
+
+        instance.create_password(password=password)
+
+        return instance
+
 
 class Product(db.Model):
     id_product = db.Column(db.Integer, primary_key=True)
@@ -39,6 +56,18 @@ class Product(db.Model):
         return f"Product('{self.product_name}', '{self.price}')"
 
     __table_args__ = {'extend_existing': True}
+
+    @classmethod
+    def add_product(cls, product_name, price, seller_username):
+
+        instance = cls(
+            product_name=product_name,
+            price=price,
+            seller_username=seller_username
+        )
+
+        db.session.add(instance)
+        db.session.commit()
 
 
 if __name__ == '__main__':

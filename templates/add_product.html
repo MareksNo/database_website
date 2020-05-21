@@ -4,13 +4,13 @@
      <div class="container">
         <form action="" method="post">
             <div>
-                <span>Product Name</span>
-                <input type="text" name="product_name" class="form-control form-control-lg">
+                {{ form.product_name.label(class="form-control-label") }}
+                {{ form.product_name(class="form-control form-control-lg") }}
             </div>
-
+                {{ form.price.label(class="form-control-label") }}
+                {{ form.price(class="form-control form-control-lg") }}
             <div>
-                <span>Price</span>
-                <input type="text" name="price" class="form-control form-control-lg">
+
             </div>
 
             <div class="form-group" class="btn btn-outline-info">
